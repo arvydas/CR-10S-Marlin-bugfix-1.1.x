@@ -40,11 +40,11 @@ BLTouch consists of 2 connectors:
 
 My board is green. There is a 3x4 pin connector on the board next to Ext1 and Ext2 connectors. You need to use D11 labeled pins and connect BLTouch like this:
 
-       D11 <-> BLTouch
-       -------------
-        5V <-> Red
-        G  <-> Brown 
-(unlabled) <-> Orange
+         D11 <-> BLTouch
+         -------------
+          5V <-> Red
+          G  <-> Brown 
+    unlabled <-> Orange
 
 You have to replace the Z-min endstop switch with BLTouch 2 pin connector. The easiest way to do this I found by removing the connector next to Z-Min endstop and plugging BLTouch to the same connector.
 
