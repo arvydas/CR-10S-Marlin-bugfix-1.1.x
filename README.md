@@ -53,13 +53,28 @@ You have to replace the Z-min endstop switch with BLTouch 2 pin connector. The e
 - Compile and upload firmware
 - Test deploy and stow of BLTouch using menus in LCD
 - Lift Z to about 40mm
-- Run G28 command to home all axis
+- Home all axis using Prepare section in the menu
 - Use your finger to push the pin back to test that BLTouch detection works before Z reaches the bed. Z should go back up and deploy sensor again. Use your finger to push the pin again.
-- If printer stops, this means that the sensor works and now you can do the G28 command to home axis by using the sensor to touch the bed 
+- If printer stops, this means that the sensor works and now you can do the home axis and this time use the sensor to touch the bed 
 
 Stay next to power switch to turn off the machine in case nozzle rams into the bed if sensor is misconfigured or malfunctioned.
 
 Will update this section along the way. I am currently focussed on making sure that repeatability is within margins for the sensor.
+
+## Using Unified Bed Leveling (UBL)
+
+There are menu items available for UBL now. I will update this section later. For now use G-code to do bed leveling.
+
+- Level build plate on the four corners, you will find a menu item for this
+- Start by running G29 P1 command. Your printer will probe many points on your bed to create a mesh. This may take a while!
+- When probing finishes, run G29 S to save the mesh
+- Activate mesh with G29 A command
+
+Now it is time to adjust the distance between the BLTouch sensor and your hot end tip. By default the Z offset available in the main menu -> Prepare -> Motion section is set to 0.000mm. You will need to adjust this safely. Start a very basic print (a cube) on the center of the build plate and watch the first layer. If the extruder does not reach the build plate, set the value of the Z offset to -0.2mm and start printing again. You will need to clean the nozzle after each attempt! Keep decreasing the offset until you get a nice adhesion for the first layer.
+
+More details about bed leveling can be found here:
+
+http://marlinfw.org/docs/features/unified_bed_leveling.html
 
 ## Support
 
