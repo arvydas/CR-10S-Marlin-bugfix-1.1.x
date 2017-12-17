@@ -871,8 +871,8 @@
  */
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
-#define AUTO_BED_LEVELING_BILINEAR
-//#define AUTO_BED_LEVELING_UBL
+//#define AUTO_BED_LEVELING_BILINEAR
+#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
 
 /**
@@ -915,9 +915,9 @@
 
   // Set the boundaries for probing (where the probe can reach).
   #define LEFT_PROBE_BED_POSITION 50
-  #define RIGHT_PROBE_BED_POSITION X_BED_SIZE - 50
+  #define RIGHT_PROBE_BED_POSITION 450
   #define FRONT_PROBE_BED_POSITION 20
-  #define BACK_PROBE_BED_POSITION Y_BED_SIZE - 50
+  #define BACK_PROBE_BED_POSITION 450
 
   // The Z probe minimum outer margin (to validate G29 parameters).
   #define MIN_PROBE_EDGE 10
@@ -966,12 +966,12 @@
   #define GRID_MAX_POINTS_X 10      // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
-  #define UBL_PROBE_PT_1_X 39       // Probing points for 3-Point leveling of the mesh
-  #define UBL_PROBE_PT_1_Y 180
-  #define UBL_PROBE_PT_2_X 39
-  #define UBL_PROBE_PT_2_Y 20
-  #define UBL_PROBE_PT_3_X 180
-  #define UBL_PROBE_PT_3_Y 20
+  #define UBL_PROBE_PT_1_X 50       // Probing points for 3-Point leveling of the mesh
+  #define UBL_PROBE_PT_1_Y Y_BED_SIZE - 50
+  #define UBL_PROBE_PT_2_X 50
+  #define UBL_PROBE_PT_2_Y 50
+  #define UBL_PROBE_PT_3_X X_BED_SIZE - 50
+  #define UBL_PROBE_PT_3_Y 50
 
   #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
   #define UBL_SAVE_ACTIVE_ON_M500   // Save the currently active mesh in the current slot on M500
