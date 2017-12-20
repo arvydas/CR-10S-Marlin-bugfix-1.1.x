@@ -69,6 +69,7 @@ There are menu items available for UBL now. I will update this section later. Fo
 - Start by running G29 P1 command. Your printer will probe many points on your bed to create a mesh. This may take a while!
 - When probing finishes, run G29 S to save the mesh
 - Activate mesh with G29 A command
+- Save settings with M500
 
 Now it is time to adjust the distance between the BLTouch sensor and your hot end tip. By default the Z offset available in the main menu -> Prepare -> Motion section is set to 0.000mm. You will need to adjust this safely. Start a very basic print (a cube) on the center of the build plate and watch the first layer. If the extruder does not reach the build plate, set the value of the Z offset to -0.2mm and start printing again. You will need to clean the nozzle after each attempt! Keep decreasing the offset until you get a nice adhesion for the first layer. In my case the value for the Z offset was -0.76mm
 
