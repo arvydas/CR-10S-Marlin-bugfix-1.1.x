@@ -2553,10 +2553,8 @@ void kill_screen(const char* lcd_msg) {
               lcd_bed_leveling
             #endif
           );
-    #else
-      #if PLANNER_LEVELING
-        MENU_ITEM(gcode, MSG_BED_LEVELING, PSTR("G28\nG29"));
-      #endif
+    #elif PLANNER_LEVELING && DISABLED(PROBE_MANUALLY)
+      MENU_ITEM(gcode, MSG_BED_LEVELING, PSTR("G28\nG29"));
     #endif
 
     #if ENABLED(LEVEL_BED_CORNERS) && DISABLED(LCD_BED_LEVELING)
@@ -2752,12 +2750,6 @@ void kill_screen(const char* lcd_msg) {
     }
 
   #endif // DELTA_CALIBRATION_MENU || DELTA_AUTO_CALIBRATION
-
-  #if IS_KINEMATIC
-    extern float feedrate_mm_s;
-    void set_destination_from_current();
-    void prepare_move_to_destination();
-  #endif
 
   /**
    * If the most recent manual move hasn't been fed to the planner yet,

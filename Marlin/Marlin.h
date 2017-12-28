@@ -210,6 +210,7 @@ inline void refresh_cmd_timeout() { previous_cmd_ms = millis(); }
 /**
  * Feedrate scaling and conversion
  */
+extern float feedrate_mm_s;
 extern int16_t feedrate_percentage;
 
 #define MMS_SCALED(MM_S) ((MM_S)*feedrate_percentage*0.01)
@@ -320,17 +321,17 @@ void report_current_position();
   #endif
 
   // Macro to obtain the Z position of an individual tower
-  #define DELTA_Z(T) raw[Z_AXIS] + _SQRT(     \
-    delta_diagonal_rod_2_tower[T] - HYPOT2(   \
-        delta_tower[T][X_AXIS] - raw[X_AXIS], \
-        delta_tower[T][Y_AXIS] - raw[Y_AXIS]  \
-      )                                       \
+  #define DELTA_Z(V,T) V[Z_AXIS] + _SQRT(   \
+    delta_diagonal_rod_2_tower[T] - HYPOT2( \
+        delta_tower[T][X_AXIS] - V[X_AXIS], \
+        delta_tower[T][Y_AXIS] - V[Y_AXIS]  \
+      )                                     \
     )
 
-  #define DELTA_RAW_IK() do {        \
-    delta[A_AXIS] = DELTA_Z(A_AXIS); \
-    delta[B_AXIS] = DELTA_Z(B_AXIS); \
-    delta[C_AXIS] = DELTA_Z(C_AXIS); \
+  #define DELTA_IK(V) do {        \
+    delta[A_AXIS] = DELTA_Z(V, A_AXIS); \
+    delta[B_AXIS] = DELTA_Z(V, B_AXIS); \
+    delta[C_AXIS] = DELTA_Z(V, C_AXIS); \
   }while(0)
 
 #elif IS_SCARA
@@ -422,9 +423,9 @@ void report_current_position();
   extern bool filament_sensor;         // Flag that filament sensor readings should control extrusion
   extern float filament_width_nominal, // Theoretical filament diameter i.e., 3.00 or 1.75
                filament_width_meas;    // Measured filament diameter
-  extern uint8_t meas_delay_cm,        // Delay distance
-                 measurement_delay[];  // Ring buffer to delay measurement
-  extern int8_t filwidth_delay_index[2]; // Ring buffer indexes. Used by planner, temperature, and main code
+  extern uint8_t meas_delay_cm;        // Delay distance
+  extern int8_t measurement_delay[MAX_MEASUREMENT_DELAY + 1],  // Ring buffer to delay measurement
+                filwidth_delay_index[2]; // Ring buffer indexes. Used by planner, temperature, and main code
 #endif
 
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
@@ -460,6 +461,10 @@ extern uint8_t active_extruder;
 #if ENABLED(MIXING_EXTRUDER)
   extern float mixing_factor[MIXING_STEPPERS];
 #endif
+
+inline void set_current_from_destination() { COPY(current_position, destination); }
+inline void set_destination_from_current() { COPY(destination, current_position); }
+void prepare_move_to_destination();
 
 /**
  * Blocking movement and shorthand functions
